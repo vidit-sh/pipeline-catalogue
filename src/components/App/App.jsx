@@ -5,7 +5,6 @@ import Grid from "@material-ui/core/Grid";
 import { move, reorder } from "../../utils/lists";
 import AvailableOptions from "../AvailableOptions";
 import SelectedOptions from "../SelectedOptions/";
-import { buckets } from "../../constants";
 import Header from "../Header";
 import Configurations from "../Configurations/Configurations";
 
@@ -18,14 +17,16 @@ const getItems = (prefix, count, offset = 0) =>
 
 class App extends Component {
   state = {
-    availableItems: buckets.reduce(
-      (accu, curr) => ({ ...accu, [curr]: getItems(curr, 2) }),
-      {}
-    ),
-    selectedItems: buckets.reduce(
-      (accu, curr) => ({ ...accu, [curr]: [] }),
-      {}
-    ),
+    availableItems: {},
+    selectedItems: {},
+    // availableItems: buckets.reduce(
+    //   (accu, curr) => ({ ...accu, [curr]: getItems(curr, 2) }),
+    //   {}
+    // ),
+    // selectedItems: buckets.reduce(
+    //   (accu, curr) => ({ ...accu, [curr]: [] }),
+    //   {}
+    // ),
     droppableBucket: null
   };
 

@@ -2,7 +2,7 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 import classnames from "classnames";
 
-import { buckets } from "../../constants";
+import { stages } from "../../data/config.json";
 
 import Bucket from "../Bucket";
 import { withStyles } from "@material-ui/core";
@@ -21,11 +21,11 @@ function OptionsSelector({
       <Typography variant="h2" className={classes.heading}>
         {title}
       </Typography>
-      {buckets.map(bucket => {
+      {stages.map(bucket => {
         return (
           <Bucket
-            key={bucket}
-            bucket={bucket}
+            key={bucket.name}
+            bucketName={bucket.name}
             items={items}
             type={type}
             droppableBucket={droppableBucket}

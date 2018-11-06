@@ -1,0 +1,15 @@
+{
+  "libraries": [
+    {
+      "manifest": "/manifest.json",
+      "repo": "static/data/examples/core",
+      "repo_example": "<github path>",
+      "docpath": "/docs"
+    },
+    {
+      "manifest": "/manifest.json",
+      "repo": "static/data/examples/node",
+      "docpath": "/docs"
+    }
+  ]
+}
