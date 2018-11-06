@@ -1,6 +1,7 @@
 {
   "name": "pipeline-catalogue",
   "version": "0.1.0",
+  "homepage": "https://vidit-sh.github.io/pipeline-catalogue",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.3.2",
