@@ -3,7 +3,6 @@ import Typography from "@material-ui/core/Typography";
 import classnames from "classnames";
 
 import { stages } from "../../data/config.json";
-
 import Bucket from "../Bucket";
 import { withStyles } from "@material-ui/core";
 import styles from "./OptionsSelector.styles";

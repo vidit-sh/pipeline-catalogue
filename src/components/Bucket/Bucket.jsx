@@ -40,8 +40,8 @@ function Bucket({ classes, bucketName, items, type, droppableBucket }) {
               {items && items[bucketName]
                 ? items[bucketName].map((item, index) => (
                     <Draggable
-                      key={item.id}
-                      draggableId={`${type}-${item.id}`}
+                      key={item}
+                      draggableId={`${type}-${item}`}
                       index={index}
                     >
                       {(provided, snapshot) => (
@@ -57,7 +57,7 @@ function Bucket({ classes, bucketName, items, type, droppableBucket }) {
                             }}
                           >
                             <ListItemText
-                              primary={item.content}
+                              primary={item}
                               classes={{
                                 primary: snapshot.isDragging
                                   ? classes.listItemTextDragged

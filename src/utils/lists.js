@@ -12,7 +12,7 @@ export const reorder = (list, startIndex, endIndex) => {
  */
 export const move = (source, destination, sourceIndex, destinationIndex) => {
   const sourceClone = Array.from(source);
-  const destClone = Array.from(destination);
+  const destClone = Array.from(destination || []);
   const [removed] = sourceClone.splice(sourceIndex, 1);
 
   destClone.splice(destinationIndex, 0, removed);

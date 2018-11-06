@@ -6,7 +6,8 @@ import { move, reorder } from "../../utils/lists";
 import AvailableOptions from "../AvailableOptions";
 import SelectedOptions from "../SelectedOptions/";
 import Header from "../Header";
-import Configurations from "../Configurations/Configurations";
+import Configurations from "../Configurations";
+import methods from "../../data/libraries";
 
 // fake data generator
 const getItems = (prefix, count, offset = 0) =>
@@ -17,7 +18,7 @@ const getItems = (prefix, count, offset = 0) =>
 
 class App extends Component {
   state = {
-    availableItems: {},
+    availableItems: methods,
     selectedItems: {},
     // availableItems: buckets.reduce(
     //   (accu, curr) => ({ ...accu, [curr]: getItems(curr, 2) }),
@@ -83,7 +84,6 @@ class App extends Component {
         source.index,
         destination.index
       );
-      console.log(JSON.stringify(rearranged));
       this.setState(prevState => {
         return sourceColumn === "available"
           ? {
