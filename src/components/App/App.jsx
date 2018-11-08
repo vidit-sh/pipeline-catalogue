@@ -28,8 +28,30 @@ class App extends Component {
     //   (accu, curr) => ({ ...accu, [curr]: [] }),
     //   {}
     // ),
-    droppableBucket: null
+    droppableBucket: null,
+    usedLibraries: new Set()
   };
+
+  componentWillMount() {
+    const usedLibraries = new Set();
+    const selectedItems = Object.keys(methods).reduce((accu, curr) => {
+      let tempAccu = { ...accu };
+      methods[curr].forEach(method => {
+        if (method.required) {
+          tempAccu = {
+            ...tempAccu,
+            [curr]: tempAccu[curr] ? [...tempAccu[curr], method] : [method]
+          };
+          usedLibraries.add(method.library);
+        }
+      });
+      return tempAccu;
+    }, {});
+    this.setState({
+      selectedItems,
+      usedLibraries
+    });
+  }
 
   onDragEnd = result => {
     const { source, destination, type } = result;
@@ -95,7 +117,12 @@ class App extends Component {
                 ...prevState.selectedItems,
                 [destinationBucket]: rearranged.destination
               },
-              droppableBucket: null
+              droppableBucket: null,
+              usedLibraries: new Set(
+                prevState.usedLibraries.add(
+                  availableItems[sourceBucket][source.index].library
+                )
+              )
             }
           : {
               availableItems: {
@@ -106,7 +133,12 @@ class App extends Component {
                 ...prevState.selectedItems,
                 [sourceBucket]: rearranged.source
               },
-              droppableBucket: null
+              droppableBucket: null,
+              usedLibraries: new Set(
+                prevState.usedLibraries.delete(
+                  selectedItems[sourceBucket][source.index].library
+                )
+              )
             };
       });
     }
@@ -122,7 +154,12 @@ class App extends Component {
   // Normally you would want to split things out into separate components.
   // But in this example everything is just done in one place for simplicity
   render() {
-    const { availableItems, selectedItems, droppableBucket } = this.state;
+    const {
+      availableItems,
+      selectedItems,
+      droppableBucket,
+      usedLibraries
+    } = this.state;
     return (
       <div>
         <Header />
@@ -144,7 +181,7 @@ class App extends Component {
               />
             </Grid>
             <Grid item xs={3}>
-              <Configurations />
+              <Configurations usedLibraries={usedLibraries} />
             </Grid>
           </Grid>
         </DragDropContext>

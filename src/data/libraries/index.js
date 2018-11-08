@@ -8,7 +8,12 @@ export default libraries.reduce((accu, curr) => {
   Object.keys(curr.methods).forEach(method => {
     const stage = curr.methods[method].stage || "Misc";
     newAccu[stage] = newAccu[stage] || [];
-    newAccu[stage].push(`${curr.key}.${method}`);
+    newAccu[stage].push({
+      ...curr.methods[method],
+      method: `${curr.key}.${method}`,
+      required: curr.methods[method].required === "always",
+      library: curr.key
+    });
   });
   return newAccu;
 }, {});

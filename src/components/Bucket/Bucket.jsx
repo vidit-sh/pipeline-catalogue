@@ -40,9 +40,10 @@ function Bucket({ classes, bucketName, items, type, droppableBucket }) {
               {items && items[bucketName]
                 ? items[bucketName].map((item, index) => (
                     <Draggable
-                      key={item}
-                      draggableId={`${type}-${item}`}
+                      key={item.method}
+                      draggableId={`${type}-${bucketName}-${item.method}`}
                       index={index}
+                      isDragDisabled={item.required}
                     >
                       {(provided, snapshot) => (
                         <RootRef rootRef={provided.innerRef}>
@@ -50,6 +51,7 @@ function Bucket({ classes, bucketName, items, type, droppableBucket }) {
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
                             style={provided.draggableProps.style}
+                            disabled={item.required}
                             classes={{
                               root: snapshot.isDragging
                                 ? classes.listItemDragged
@@ -57,7 +59,7 @@ function Bucket({ classes, bucketName, items, type, droppableBucket }) {
                             }}
                           >
                             <ListItemText
-                              primary={item}
+                              primary={item.method}
                               classes={{
                                 primary: snapshot.isDragging
                                   ? classes.listItemTextDragged

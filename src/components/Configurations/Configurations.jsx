@@ -11,6 +11,61 @@ import {
 } from "@material-ui/core";
 import styles from "./Configurations.styles";
 
+const getConfig = usedLibraries => {
+  return `config:${
+    usedLibraries && usedLibraries.size
+      ? `
+    libraries:
+${Array.from(usedLibraries.values())
+          .map(lib => `\t- ${lib}`)
+          .join("\n")}
+`
+      : ""
+  }`;
+};
+
+const getPipeline = () => `
+@Library('conduit')_
+
+pipeline {
+  agent any
+  options {
+    {{#options}}
+    {{.}}
+    {{/options}}
+  }
+  stages {
+    {{#stages}}
+    {{#if methods}}
+    stage('{{ name }}') {
+      steps {
+        {{#unless noUnstash}}
+        unstash 'src'
+        {{/unless}}
+        {{#methods}}
+        {{#with (lookup ../../methods .) as |method|}}
+        {{#unless isCore}}{{method.src}}.{{/unless}}{{method.name}} {{method.defaultArgs}}
+        {{/with}}
+        {{/methods}}
+      }
+    }
+    {{/if}}
+    {{/stages}}
+  }
+  {{#if post}}
+  post {
+    always {
+      script {
+      {{#post}}
+          {{.}}
+      {{/post}}
+      }
+    }
+  }
+  {{/if}}
+}
+`;
+
 class Configurations extends React.Component {
   state = {
     expanded: null
@@ -23,7 +78,7 @@ class Configurations extends React.Component {
   };
 
   render() {
-    const { className, classes } = this.props;
+    const { className, classes, usedLibraries } = this.props;
     const { expanded } = this.state;
     return (
       <div className={classnames(className, classes.root)}>
@@ -38,7 +93,7 @@ class Configurations extends React.Component {
             <Typography className={classes.heading}>Pipeline</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <Typography>Content</Typography>
+            <pre>{getPipeline()}</pre>
           </ExpansionPanelDetails>
         </ExpansionPanel>
         <ExpansionPanel
@@ -51,7 +106,7 @@ class Configurations extends React.Component {
             </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <Typography>Content</Typography>
+            <pre>{getConfig(usedLibraries)}</pre>
           </ExpansionPanelDetails>
         </ExpansionPanel>
       </div>
