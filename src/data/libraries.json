@@ -1,0 +1,23 @@
+{
+  "Jenkins": {
+    "Java": {
+      "Unit Test": [
+        {
+          "Solution": "Jenkins",
+          "Archetype": "Java",
+          "Name": "Unit Test",
+          "Description": "Ability to run unit testing",
+          "Command": "unitTest coverage unit",
+          "Stage": "Unit Test",
+          "Minimum SolutionVersion": "2.12",
+          "Version": "1.0",
+          "Tags": "Jenkins, UnitTest, SharedLib",
+          "Github Repo": "github.com/unittest",
+          "Platform": "Unix",
+          "Dependencies": "pipelineplugin",
+          "Library": "unittest@master"
+        }
+      ]
+    }
+  }
+}
