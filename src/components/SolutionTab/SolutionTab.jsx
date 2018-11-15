@@ -181,7 +181,7 @@ class SolutionTab extends React.Component {
               />
             </Grid>
             <Grid item xs={3}>
-              <Configurations usedLibraries={usedLibraries} />
+              <Configurations usedLibraries={usedLibraries} selectedItems={selectedItems}/>
             </Grid>
           </Grid>
         </DragDropContext>

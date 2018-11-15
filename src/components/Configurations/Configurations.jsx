@@ -11,66 +11,19 @@ import {
 } from "@material-ui/core";
 import styles from "./Configurations.styles";
 
-const getConfig = usedLibraries => {
-  return `config:${
-    usedLibraries && usedLibraries.size
-      ? `
-    libraries:
-${Array.from(usedLibraries.values())
-          .map(lib => `\t- ${lib}`)
-          .join("\n")}
-`
-      : ""
-  }`;
-};
-
-const getPipeline = () => "";
-// `
-// @Library('conduit')_
-
-// pipeline {
-//   agent any
-//   options {
-//     {{#options}}
-//     {{.}}
-//     {{/options}}
-//   }
-//   stages {
-//     {{#stages}}
-//     {{#if methods}}
-//     stage('{{ name }}') {
-//       steps {
-//         {{#unless noUnstash}}
-//         unstash 'src'
-//         {{/unless}}
-//         {{#methods}}
-//         {{#with (lookup ../../methods .) as |method|}}
-//         {{#unless isCore}}{{method.src}}.{{/unless}}{{method.name}} {{method.defaultArgs}}
-//         {{/with}}
-//         {{/methods}}
-//       }
-//     }
-//     {{/if}}
-//     {{/stages}}
-//   }
-//   {{#if post}}
-//   post {
-//     always {
-//       script {
-//       {{#post}}
-//           {{.}}
-//       {{/post}}
-//       }
-//     }
-//   }
-//   {{/if}}
-// }
-// `;
+const Mustache = require("mustache");
 
 class Configurations extends React.Component {
   state = {
     expanded: null
   };
+
+  async componentDidMount() {
+    const configResponse = await fetch("/templates/config.template.mst");
+    this.configTemplate = await configResponse.text();
+    const pipelineResponse = await fetch("/templates/pipeline.template.mst");
+    this.pipelineTemplate = await pipelineResponse.text();
+  }
 
   handleChange = panel => (event, expanded) => {
     this.setState({
@@ -79,7 +32,7 @@ class Configurations extends React.Component {
   };
 
   render() {
-    const { className, classes, usedLibraries } = this.props;
+    const { className, classes, usedLibraries, selectedItems } = this.props;
     const { expanded } = this.state;
     return (
       <div className={classnames(className, classes.root)}>
@@ -94,7 +47,18 @@ class Configurations extends React.Component {
             <Typography className={classes.heading}>Pipeline</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <pre>{getPipeline()}</pre>
+            <pre>
+              {this.pipelineTemplate
+                ? Mustache.render(this.pipelineTemplate, {
+                    selectedItems: Object.keys(selectedItems).map(key => ({
+                      name: key,
+                      commands: selectedItems[key].map(item => item.Command),
+                      isVisible:
+                        !!selectedItems[key] && selectedItems[key].length
+                    }))
+                  })
+                : null}
+            </pre>
           </ExpansionPanelDetails>
         </ExpansionPanel>
         <ExpansionPanel
@@ -107,7 +71,14 @@ class Configurations extends React.Component {
             </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <pre>{getConfig(usedLibraries)}</pre>
+            <pre>
+              {this.configTemplate
+                ? Mustache.render(this.configTemplate, {
+                    libraries: Array.from(usedLibraries),
+                    showLibraries: usedLibraries.size
+                  })
+                : null}
+            </pre>
           </ExpansionPanelDetails>
         </ExpansionPanel>
       </div>
