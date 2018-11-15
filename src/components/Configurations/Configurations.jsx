@@ -19,9 +19,9 @@ class Configurations extends React.Component {
   };
 
   async componentDidMount() {
-    const configResponse = await fetch("/templates/config.template.mst");
+    const configResponse = await fetch("/static/templates/config.template.mst");
     this.configTemplate = await configResponse.text();
-    const pipelineResponse = await fetch("/templates/pipeline.template.mst");
+    const pipelineResponse = await fetch("/static/templates/pipeline.template.mst");
     this.pipelineTemplate = await pipelineResponse.text();
   }
 
