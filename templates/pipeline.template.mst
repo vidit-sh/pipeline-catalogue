@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+ 
+    stages {
+		{{#selectedItems}}
+        {{#isVisible}}
+        stage('{{name}}') {
+            steps {
+                {{#commands}}
+                {{.}}
+                {{/commands}}
+            }
+        }
+        {{/isVisible}}
+		{{/selectedItems}}
+    }
+ }
