@@ -1,13 +1,13 @@
 {
   "main.css": "/pipeline-catalogue/static/css/main.11bbc5eb.chunk.css",
-  "main.js": "/pipeline-catalogue/static/js/main.c2c742fd.chunk.js",
-  "main.js.map": "/pipeline-catalogue/static/js/main.c2c742fd.chunk.js.map",
+  "main.js": "/pipeline-catalogue/static/js/main.a72d0c0c.chunk.js",
+  "main.js.map": "/pipeline-catalogue/static/js/main.a72d0c0c.chunk.js.map",
   "static/js/1.e2396462.chunk.js": "/pipeline-catalogue/static/js/1.e2396462.chunk.js",
   "static/js/1.e2396462.chunk.js.map": "/pipeline-catalogue/static/js/1.e2396462.chunk.js.map",
   "runtime~main.js": "/pipeline-catalogue/static/js/runtime~main.38da9292.js",
   "runtime~main.js.map": "/pipeline-catalogue/static/js/runtime~main.38da9292.js.map",
   "static/css/main.11bbc5eb.chunk.css.map": "/pipeline-catalogue/static/css/main.11bbc5eb.chunk.css.map",
   "index.html": "/pipeline-catalogue/index.html",
-  "precache-manifest.94f95215ec8e787ff7f1e15e0a56e458.js": "/pipeline-catalogue/precache-manifest.94f95215ec8e787ff7f1e15e0a56e458.js",
+  "precache-manifest.48fd86e5afa1371bdd95974c877537de.js": "/pipeline-catalogue/precache-manifest.48fd86e5afa1371bdd95974c877537de.js",
   "service-worker.js": "/pipeline-catalogue/service-worker.js"
 }
