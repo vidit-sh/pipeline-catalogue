@@ -27,7 +27,9 @@ class SolutionTab extends React.Component {
 
   handleChange = event => {
     this.setState({
-      selectedArchetype: event.target.value
+      selectedArchetype: event.target.value,
+      availableItems: this.props.data[event.target.value],
+      selectedItems: {}
     });
   };
 
@@ -181,7 +183,10 @@ class SolutionTab extends React.Component {
               />
             </Grid>
             <Grid item xs={3}>
-              <Configurations usedLibraries={usedLibraries} selectedItems={selectedItems}/>
+              <Configurations
+                usedLibraries={usedLibraries}
+                selectedItems={selectedItems}
+              />
             </Grid>
           </Grid>
         </DragDropContext>

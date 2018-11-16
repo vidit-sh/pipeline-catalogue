@@ -5,17 +5,60 @@
         {
           "Solution": "Jenkins",
           "Archetype": "Java",
-          "Name": "Unit Test",
-          "Description": "Ability to run unit testing",
-          "Command": "unitTest coverage unit",
+          "Name": "SonarQube",
+          "Description": "Ability to run Sonar",
+          "Command": "Sonarrun",
           "Stage": "Unit Test",
           "Minimum SolutionVersion": "2.12",
           "Version": "1.0",
-          "Tags": "Jenkins, UnitTest, SharedLib",
-          "Github Repo": "github.com/unittest",
-          "Platform": "Unix",
+          "Tags": "Jenkins, Sonar, SharedLib",
+          "Github Repo": "github.com/sonar",
+          "Platform": "multi",
           "Dependencies": "pipelineplugin",
-          "Library": "unittest@master"
+          "Library": "sonarqube@master",
+          "Config": "pipelines/conf/sonarqube.yaml"
+        }
+      ]
+    },
+    "Node": {
+      "Build": [
+        {
+          "Solution": "Jenkins",
+          "Archetype": "Node",
+          "Name": "Build",
+          "Description": "Ability to run build",
+          "Command": "gulp run",
+          "Stage": "build",
+          "Minimum SolutionVersion": "2.12",
+          "Version": "1.0",
+          "Tags": "Jenkins, build, SharedLib",
+          "Github Repo": "github.com/nodebuild",
+          "Platform": "multi",
+          "Dependencies": "pipelineplugin",
+          "Library": "nodebuild@master",
+          "Config": "pipelines/conf/node_build.yaml"
+        }
+      ]
+    }
+  },
+  "Ansible": {
+    "Role": {
+      "Rancher": [
+        {
+          "Solution": "Ansible",
+          "Archetype": "Role",
+          "Name": "Rancher",
+          "Description": "Role to install Rancher",
+          "Command": "ansible-playbook rancher",
+          "Stage": "Rancher",
+          "Minimum SolutionVersion": "2.12",
+          "Version": "1.0",
+          "Tags": "Ansible, Roles, Rancher",
+          "Github Repo": "github.com/ansible/rancher",
+          "Platform": "multi",
+          "Dependencies": "rke, docker",
+          "Library": "",
+          "Config": ""
         }
       ]
     }
