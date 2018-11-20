@@ -1,7 +1,12 @@
 import React from "react";
 import OptionsSelector from "../OptionsSelector/OptionsSelector";
 
-function AvailableOptions({ className, availableItems, droppableBucket }) {
+function AvailableOptions({
+  className,
+  availableItems,
+  droppableBucket,
+  stages
+}) {
   return (
     <OptionsSelector
       className={className}
@@ -9,6 +14,7 @@ function AvailableOptions({ className, availableItems, droppableBucket }) {
       title="Available Options"
       type="available"
       droppableBucket={droppableBucket}
+      stages={stages}
     />
   );
 }

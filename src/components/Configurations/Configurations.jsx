@@ -57,7 +57,8 @@ class Configurations extends React.Component {
                     selectedItems: Object.keys(selectedItems).map(key => ({
                       name: key,
                       commands: selectedItems[key].map(item => item.Command),
-                      isVisible:
+                      libraries: selectedItems[key].map(item => item.Library),
+                      isStageVisible:
                         !!selectedItems[key] && selectedItems[key].length
                     }))
                   })
@@ -70,9 +71,7 @@ class Configurations extends React.Component {
           onChange={this.handleChange("config")}
         >
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.heading}>
-              config/Jenkinsfile.yaml
-            </Typography>
+            <Typography className={classes.heading}>Config</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <pre>

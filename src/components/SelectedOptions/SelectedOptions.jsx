@@ -1,7 +1,12 @@
 import React from "react";
 import OptionsSelector from "../OptionsSelector/OptionsSelector";
 
-function SelectedOptions({ className, selectedItems, droppableBucket }) {
+function SelectedOptions({
+  className,
+  selectedItems,
+  droppableBucket,
+  stages
+}) {
   return (
     <OptionsSelector
       className={className}
@@ -9,6 +14,7 @@ function SelectedOptions({ className, selectedItems, droppableBucket }) {
       title="Selected Options"
       type="selected"
       droppableBucket={droppableBucket}
+      stages={stages}
     />
   );
 }
