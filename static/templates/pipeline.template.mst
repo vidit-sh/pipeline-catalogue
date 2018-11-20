@@ -1,9 +1,17 @@
+{{#selectedItems}}
+{{#isStageVisible}}
+{{#libraries}}
+library identifier '{{.}}'
+{{/libraries}}
+{{/isStageVisible}}
+{{/selectedItems}}
+
 pipeline {
     agent any
  
     stages {
 		{{#selectedItems}}
-        {{#isVisible}}
+        {{#isStageVisible}}
         stage('{{name}}') {
             steps {
                 {{#commands}}
@@ -11,7 +19,7 @@ pipeline {
                 {{/commands}}
             }
         }
-        {{/isVisible}}
+        {{/isStageVisible}}
 		{{/selectedItems}}
     }
  }
