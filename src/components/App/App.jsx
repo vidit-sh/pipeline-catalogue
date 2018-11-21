@@ -1,15 +1,22 @@
 import React, { Component } from "react";
 
 import Header from "../Header";
-import { Tabs, Tab, withStyles } from "@material-ui/core";
-import data from "../../data/libraries.json";
+import { Tabs, Tab, withStyles, LinearProgress } from "@material-ui/core";
 import SolutionTab from "../SolutionTab/SolutionTab";
 import styles from "./App.styles";
 
 class App extends Component {
   state = {
-    currentSol: 0
+    currentSol: 0,
+    data: null
   };
+
+  async componentWillMount() {
+    const response = await fetch("./static/data/libraries.json");
+    this.setState({
+      data: await response.json()
+    });
+  }
 
   onTabClick = (event, value) => {
     this.setState({ currentSol: value });
@@ -17,9 +24,9 @@ class App extends Component {
 
   render() {
     const { classes } = this.props;
-    const { currentSol } = this.state;
+    const { currentSol, data } = this.state;
 
-    return (
+    return data ? (
       <div>
         <Header />
         <div className={classes.tabs}>
@@ -36,6 +43,8 @@ class App extends Component {
           )}
         </div>
       </div>
+    ) : (
+      <LinearProgress color="secondary" />
     );
   }
 }
