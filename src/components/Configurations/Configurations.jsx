@@ -36,7 +36,7 @@ class Configurations extends React.Component {
   };
 
   render() {
-    const { className, classes, usedLibraries, selectedItems } = this.props;
+    const { className, classes, usedConfigs, selectedItems } = this.props;
     const { expanded } = this.state;
     return (
       <div className={classnames(className, classes.root)}>
@@ -56,7 +56,13 @@ class Configurations extends React.Component {
                 ? Mustache.render(this.pipelineTemplate, {
                     selectedItems: Object.keys(selectedItems).map(key => ({
                       name: key,
-                      commands: selectedItems[key].map(item => item.Command),
+                      commands: selectedItems[key].reduce(
+                        (accu, item) =>
+                          Array.isArray(item.Command)
+                            ? accu.concat(item.Command)
+                            : [...accu, item.Command],
+                        []
+                      ),
                       libraries: selectedItems[key].map(item => item.Library),
                       isStageVisible:
                         !!selectedItems[key] && selectedItems[key].length
@@ -77,8 +83,8 @@ class Configurations extends React.Component {
             <pre>
               {this.configTemplate
                 ? Mustache.render(this.configTemplate, {
-                    libraries: Array.from(usedLibraries),
-                    showLibraries: usedLibraries.size
+                    usedConfigs: Array.from(usedConfigs)
+                    // showLibraries: usedConfigs.size
                   })
                 : null}
             </pre>

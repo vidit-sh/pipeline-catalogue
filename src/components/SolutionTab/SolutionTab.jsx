@@ -21,7 +21,7 @@ class SolutionTab extends React.Component {
     selectedArchetype: Object.keys(this.props.data)[0],
     availableItems: this.props.data[Object.keys(this.props.data)[0]],
     selectedItems: {},
-    usedLibraries: new Set(),
+    usedConfigs: new Set(),
     droppableBucket: null
   };
 
@@ -29,7 +29,8 @@ class SolutionTab extends React.Component {
     this.setState({
       selectedArchetype: event.target.value,
       availableItems: this.props.data[event.target.value],
-      selectedItems: {}
+      selectedItems: {},
+      usedConfigs: new Set()
     });
   };
 
@@ -87,11 +88,9 @@ class SolutionTab extends React.Component {
         destination.index
       );
       this.setState(prevState => {
-        const newUsedLibraries = new Set(prevState.usedLibraries);
+        const newUsedConfigs = new Set(prevState.usedConfigs);
         if (sourceColumn === "available") {
-          newUsedLibraries.add(
-            availableItems[sourceBucket][source.index].Library
-          );
+          newUsedConfigs.add(availableItems[sourceBucket][source.index].Config);
           return {
             availableItems: {
               ...prevState.availableItems,
@@ -102,11 +101,11 @@ class SolutionTab extends React.Component {
               [destinationBucket]: rearranged.destination
             },
             droppableBucket: null,
-            usedLibraries: newUsedLibraries
+            usedConfigs: newUsedConfigs
           };
         } else {
-          newUsedLibraries.delete(
-            selectedItems[sourceBucket][source.index].Library
+          newUsedConfigs.delete(
+            selectedItems[sourceBucket][source.index].Config
           );
           return {
             availableItems: {
@@ -118,7 +117,7 @@ class SolutionTab extends React.Component {
               [sourceBucket]: rearranged.source
             },
             droppableBucket: null,
-            usedLibraries: newUsedLibraries
+            usedConfigs: newUsedConfigs
           };
         }
       });
@@ -140,7 +139,7 @@ class SolutionTab extends React.Component {
       availableItems,
       selectedItems,
       droppableBucket,
-      usedLibraries
+      usedConfigs
     } = this.state;
 
     const archStages = Object.keys(data[selectedArchetype]);
@@ -189,7 +188,7 @@ class SolutionTab extends React.Component {
             </Grid>
             <Grid item xs={3}>
               <Configurations
-                usedLibraries={usedLibraries}
+                usedConfigs={usedConfigs}
                 selectedItems={selectedItems}
               />
             </Grid>

@@ -1,7 +1,7 @@
 {{#selectedItems}}
 {{#isStageVisible}}
 {{#libraries}}
-library identifier '{{.}}'
+library identifier '{{& .}}'
 {{/libraries}}
 {{/isStageVisible}}
 {{/selectedItems}}
@@ -12,10 +12,10 @@ pipeline {
     stages {
 		{{#selectedItems}}
         {{#isStageVisible}}
-        stage('{{name}}') {
+        stage('{{& name}}') {
             steps {
                 {{#commands}}
-                {{.}}
+                {{& .}}
                 {{/commands}}
             }
         }

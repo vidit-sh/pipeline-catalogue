@@ -7,7 +7,7 @@
           "Archetype": "Java",
           "Name": "SonarQube",
           "Description": "Ability to run Sonar",
-          "Command": "Sonarrun",
+          "Command": ["Sonarrun", "exit"],
           "Stage": "Unit Test",
           "Minimum SolutionVersion": "2.12",
           "Version": "1.0",

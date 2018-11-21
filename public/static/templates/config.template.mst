@@ -1,7 +1,3 @@
-config:
-    {{#showLibraries}}
-    libraries
-    {{/showLibraries}}
-    {{#libraries}}
-        - {{.}}
-    {{/libraries}}
+{{#usedConfigs}}
+{{& .}}
+{{/usedConfigs}}
