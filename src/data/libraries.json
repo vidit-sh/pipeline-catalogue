@@ -1,24 +1,6 @@
 {
   "Jenkins": {
     "Java": {
-      "Unit Test": [
-        {
-          "Solution": "Jenkins",
-          "Archetype": "Java",
-          "Name": "SonarQube",
-          "Description": "Ability to run Sonar",
-          "Command": ["Sonarrun", "exit"],
-          "Stage": "Unit Test",
-          "Minimum SolutionVersion": "2.12",
-          "Version": "1.0",
-          "Tags": "Jenkins, Sonar, SharedLib",
-          "Github Repo": "github.com/sonar",
-          "Platform": "multi",
-          "Dependencies": "pipelineplugin",
-          "Library": "sonarqube@master",
-          "Config": "pipelines/conf/sonarqube.yaml"
-        }
-      ],
       "MavenBuild": [
         {
           "Solution": "Jenkins",
@@ -35,6 +17,82 @@
           "Dependencies": "workflowLibs",
           "Library": "maven-bulid@master",
           "Config": "pipelines/conf/build.yaml"
+        }
+      ],
+      "Notifications Email": [
+        {
+          "Solution": "Jenkins",
+          "Archetype": "Java",
+          "Name": "Email",
+          "Description": "Notification Library for Email",
+          "Command": ["echo 'Notify using email'", "emailNotify(emailConfig)"],
+          "Stage": "Post",
+          "Minimum SolutionVersion": "2.12",
+          "Version": "1.0",
+          "Tags": "Jenkins, Notification, SharedLib, Email",
+          "Github Repo": "https://github.lbg.eu-gb.bluemix.net/jenkins-shared-library/notifications_multi.git",
+          "Platform": "multi",
+          "Dependencies": "email-ext",
+          "Library": "notfications_multi@master",
+          "Config": ""
+        }
+      ],
+      "Gitflow Enablers": [
+        {
+          "Solution": "Jenkins",
+          "Archetype": "Java",
+          "Name": "GitflowEnablers",
+          "Description": "To determine the git work flow based on Branch name",
+          "Command": [
+            "echo 'Checking git workflow'",
+            "String gitWorkFlow = gitWorkFlowTypeByBranchRule()",
+            "echo 'gitWorkFlow: ${gitWorkFlow}'"
+          ],
+          "Stage": "Init",
+          "Minimum SolutionVersion": "2.12",
+          "Version": "1.0",
+          "Tags": "Jenkins, Gitflow, SharedLib, Branch rules",
+          "Github Repo": "https://github.lbg.eu-gb.bluemix.net/jenkins-shared-library/gitflowEnablers_multi.git",
+          "Platform": "multi",
+          "Dependencies": "pipelineplugin",
+          "Library": "gitflowEnablers_multi@master",
+          "Config": ""
+        }
+      ],
+      "BDD Test": [
+        {
+          "Solution": "Jenkins",
+          "Archetype": "Java",
+          "Name": "BDD",
+          "Description": "Ability to run BDD Tests using cucumber",
+          "Command": "runBDDTests(archType : 'java' , buildTool : 'maven')",
+          "Stage": "BDD Tests",
+          "Minimum SolutionVersion": "2.12",
+          "Version": "1.0",
+          "Tags": "Jenkins, Sonar, SharedLib",
+          "Github Repo": "https://github.lbg.eu-gb.bluemix.net/jenkins-shared-library/bdd-java-maven_multi.git",
+          "Platform": "multi",
+          "Dependencies": "maven,java",
+          "Library": "bdd-java-maven_multi@master",
+          "Config": "pipelines/conf/job-configuration.yaml"
+        }
+      ],
+      "Unit Test": [
+        {
+          "Solution": "Jenkins",
+          "Archetype": "Java",
+          "Name": "sonarQube_multi",
+          "Description": "Ability to run Sonar",
+          "Command": "runSonar",
+          "Stage": "Unit Test",
+          "Minimum SolutionVersion": "2.12",
+          "Version": "1.0",
+          "Tags": "Jenkins, Sonar, SharedLib",
+          "Github Repo": "https://github.lbg.eu-gb.bluemix.net/jenkins-shared-library/sonarQube_multi.git",
+          "Platform": "multi",
+          "Dependencies": "Pipeline-utility-step",
+          "Library": "sonarqube@master",
+          "Config": "pipelines/conf/sonarQube_multi.yaml"
         }
       ]
     },

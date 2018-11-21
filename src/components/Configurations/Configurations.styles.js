@@ -5,7 +5,8 @@ export default theme => ({
     marginTop: theme.spacing.unit * 2
   },
   code: {
-    "flex-basis": "100%"
+    "flex-basis": "100%",
+    "overflow-x": "auto"
   },
   btnSave: {
     marginTop: theme.spacing.unit * 4,
