@@ -2,6 +2,9 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import classnames from "classnames";
+import saveAs from "file-saver";
+import Button from "@material-ui/core/Button";
+import SaveIcon from "@material-ui/icons/Save";
 
 import {
   withStyles,
@@ -17,6 +20,9 @@ class Configurations extends React.Component {
   state = {
     expanded: null
   };
+
+  pipelineRef = null;
+  configRef = null;
 
   async componentDidMount() {
     const configResponse = await fetch(
@@ -35,6 +41,12 @@ class Configurations extends React.Component {
     });
   };
 
+  download = (content, filename = "file") => {
+    if (!content) return;
+    var blob = new Blob([content]);
+    saveAs(blob, filename);
+  };
+
   render() {
     const { className, classes, usedConfigs, selectedItems } = this.props;
     const { expanded } = this.state;
@@ -50,8 +62,11 @@ class Configurations extends React.Component {
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Typography className={classes.heading}>Pipeline</Typography>
           </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <pre>
+          <ExpansionPanelDetails className={classes.details}>
+            <pre
+              className={classes.code}
+              ref={element => (this.pipelineRef = element)}
+            >
               {this.pipelineTemplate
                 ? Mustache.render(this.pipelineTemplate, {
                     selectedItems: Object.keys(selectedItems).map(key => ({
@@ -70,6 +85,18 @@ class Configurations extends React.Component {
                   })
                 : null}
             </pre>
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              className={classes.btnSave}
+              onClick={() => {
+                this.download(this.pipelineRef.innerText, "pipeline");
+              }}
+            >
+              <SaveIcon className={classes.btnIcon} />
+              Save
+            </Button>
           </ExpansionPanelDetails>
         </ExpansionPanel>
         <ExpansionPanel
@@ -79,8 +106,11 @@ class Configurations extends React.Component {
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Typography className={classes.heading}>Config</Typography>
           </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <pre>
+          <ExpansionPanelDetails className={classes.details}>
+            <pre
+              className={classes.code}
+              ref={element => (this.configRef = element)}
+            >
               {this.configTemplate
                 ? Mustache.render(this.configTemplate, {
                     usedConfigs: Array.from(usedConfigs)
@@ -88,6 +118,18 @@ class Configurations extends React.Component {
                   })
                 : null}
             </pre>
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              className={classes.btnSave}
+              onClick={() => {
+                this.download(this.configRef.innerText, "config");
+              }}
+            >
+              <SaveIcon className={classes.btnIcon} />
+              Save
+            </Button>
           </ExpansionPanelDetails>
         </ExpansionPanel>
       </div>
