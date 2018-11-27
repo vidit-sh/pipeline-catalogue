@@ -24,7 +24,7 @@ function OptionsSelector({
 
       {stages && stages.length ? (
         stages.map(bucket => {
-          return (
+          return items[bucket] ? (
             <Bucket
               key={bucket}
               bucketName={bucket}
@@ -32,7 +32,7 @@ function OptionsSelector({
               type={type}
               droppableBucket={droppableBucket}
             />
-          );
+          ) : null;
         })
       ) : (
         <Bucket

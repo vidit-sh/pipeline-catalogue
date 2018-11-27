@@ -14,7 +14,7 @@ import AvailableOptions from "../AvailableOptions";
 import SelectedOptions from "../SelectedOptions";
 import { move, reorder } from "../../utils/lists";
 import Configurations from "../Configurations";
-
+import { stages } from "../../constants";
 class SolutionTab extends React.Component {
   state = {
     selectedArchetype: null,
@@ -179,8 +179,6 @@ class SolutionTab extends React.Component {
       usedConfigs
     } = this.state;
 
-    const archStages = Object.keys(data[selectedArchetype]);
-
     return (
       <div>
         <form className={className} autoComplete="off">
@@ -211,7 +209,7 @@ class SolutionTab extends React.Component {
               <AvailableOptions
                 availableItems={availableItems}
                 droppableBucket={droppableBucket}
-                stages={archStages}
+                stages={stages}
               />
             </Grid>
             <Grid item xs={3}>
