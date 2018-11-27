@@ -1,14 +1,14 @@
 {
   "Jenkins": {
     "Java": {
-      "BDD Tests": [
+      "Functional Test": [
         {
           "Solution": "Jenkins",
           "Archetype": "Java",
           "Name": "BDD",
           "Description": "Ability to run BDD Tests using cucumber",
           "Command": "runBDDTests(archType : 'java' , buildTool : 'maven')",
-          "Stage": "BDD Tests",
+          "Stage": "Functional Test",
           "Minimum SolutionVersion": "2.12",
           "Version": "1.0",
           "Tags": "Jenkins, Sonar, SharedLib",
@@ -19,7 +19,7 @@
           "Config": "pipelines/conf/job-configuration.yaml"
         }
       ],
-      "Post": [
+      "Reporting": [
         {
           "Solution": "Jenkins",
           "Archetype": "Java",
@@ -29,7 +29,7 @@
             "echo 'Notify using email'",
             "emailNotify(emailConfig)"
           ],
-          "Stage": "Post",
+          "Stage": "Reporting",
           "Minimum SolutionVersion": "2.12",
           "Version": "1.0",
           "Tags": "Jenkins, Notification, SharedLib, Email",
@@ -40,7 +40,7 @@
           "Config": ""
         }
       ],
-      "Init": [
+      "Checkout": [
         {
           "Solution": "Jenkins",
           "Archetype": "Java",
@@ -51,7 +51,7 @@
             "String gitWorkFlow = gitWorkFlowTypeByBranchRule()",
             "echo 'gitWorkFlow: ${gitWorkFlow}'"
           ],
-          "Stage": "Init",
+          "Stage": "Checkout",
           "Minimum SolutionVersion": "2.12",
           "Version": "1.0",
           "Tags": "Jenkins, Gitflow, SharedLib, Branch rules",
@@ -116,28 +116,6 @@
           "Dependencies": "workflowLibs",
           "Library": "npm-bulid@master",
           "Config": "pipelines/conf/build.yaml"
-        }
-      ]
-    }
-  },
-  "Ansible": {
-    "Role": {
-      "Rancher": [
-        {
-          "Solution": "Ansible",
-          "Archetype": "Role",
-          "Name": "Rancher",
-          "Description": "Role to install Rancher",
-          "Command": "ansible-playbook rancher",
-          "Stage": "Rancher",
-          "Minimum SolutionVersion": "2.12",
-          "Version": "1.0",
-          "Tags": "Ansible, Roles, Rancher",
-          "Github Repo": "github.com/ansible/rancher",
-          "Platform": "multi",
-          "Dependencies": "rke, docker",
-          "Library": "",
-          "Config": ""
         }
       ]
     }

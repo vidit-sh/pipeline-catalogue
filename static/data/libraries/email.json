@@ -1,14 +1,14 @@
 {
   "Jenkins": {
     "Java": {
-      "Post": [
+      "Reporting": [
         {
           "Solution": "Jenkins",
           "Archetype": "Java",
           "Name": "Email",
           "Description": "Notification Library for Email",
           "Command": ["echo 'Notify using email'", "emailNotify(emailConfig)"],
-          "Stage": "Post",
+          "Stage": "Reporting",
           "Minimum SolutionVersion": "2.12",
           "Version": "1.0",
           "Tags": "Jenkins, Notification, SharedLib, Email",

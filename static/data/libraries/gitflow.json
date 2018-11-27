@@ -1,7 +1,7 @@
 {
   "Jenkins": {
     "Java": {
-      "Init": [
+      "Checkout": [
         {
           "Solution": "Jenkins",
           "Archetype": "Java",
@@ -12,7 +12,7 @@
             "String gitWorkFlow = gitWorkFlowTypeByBranchRule()",
             "echo 'gitWorkFlow: ${gitWorkFlow}'"
           ],
-          "Stage": "Init",
+          "Stage": "Checkout",
           "Minimum SolutionVersion": "2.12",
           "Version": "1.0",
           "Tags": "Jenkins, Gitflow, SharedLib, Branch rules",
