@@ -5,7 +5,8 @@ function SelectedOptions({
   className,
   selectedItems,
   droppableBucket,
-  stages
+  stages,
+  onDeleteClick
 }) {
   return (
     <OptionsSelector
@@ -14,7 +15,7 @@ function SelectedOptions({
       title="Selected Options"
       type="selected"
       droppableBucket={droppableBucket}
-      stages={stages}
+      onDeleteClick={onDeleteClick}
     />
   );
 }

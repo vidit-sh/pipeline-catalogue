@@ -18,21 +18,26 @@ const Mustache = require("mustache");
 
 class Configurations extends React.Component {
   state = {
-    expanded: null
+    expanded: null,
+    selectedItems: this.props.selectedItems
   };
 
   pipelineRef = null;
   configRef = null;
 
-  async componentDidMount() {
-    const configResponse = await fetch(
-      "./static/templates/config.template.mst"
-    );
-    this.configTemplate = await configResponse.text();
-    const pipelineResponse = await fetch(
-      "./static/templates/pipeline.template.mst"
-    );
-    this.pipelineTemplate = await pipelineResponse.text();
+  componentWillReceiveProps(nextProps) {
+    const { selectedItems } = this.props;
+    if (nextProps.selectedItems && selectedItems !== nextProps.selectedItems) {
+      const items = nextProps.selectedItems.Default || [];
+      const segregatedItems = items.reduce(
+        (accu, item) => ({
+          ...accu,
+          [item.Stage]: accu[item.Stage] ? [...accu[item.Stage], item] : [item]
+        }),
+        {}
+      );
+      this.setState({ selectedItems: segregatedItems });
+    }
   }
 
   handleChange = panel => (event, expanded) => {
@@ -48,8 +53,14 @@ class Configurations extends React.Component {
   };
 
   render() {
-    const { className, classes, usedConfigs, selectedItems } = this.props;
-    const { expanded } = this.state;
+    const {
+      className,
+      classes,
+      usedConfigs,
+      pipelineTemplate,
+      configTemplate
+    } = this.props;
+    const { expanded, selectedItems } = this.state;
     return (
       <div className={classnames(className, classes.root)}>
         <Typography variant="h2" className={classes.heading}>
@@ -60,15 +71,17 @@ class Configurations extends React.Component {
           onChange={this.handleChange("pipeline")}
         >
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.heading}>Pipeline</Typography>
+            <Typography className={classes.heading} variant="h3">
+              Pipeline
+            </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails className={classes.details}>
             <pre
               className={classes.code}
               ref={element => (this.pipelineRef = element)}
             >
-              {this.pipelineTemplate
-                ? Mustache.render(this.pipelineTemplate, {
+              {pipelineTemplate
+                ? Mustache.render(pipelineTemplate, {
                     selectedItems: Object.keys(selectedItems).map(key => ({
                       name: key,
                       commands: selectedItems[key].reduce(
@@ -87,7 +100,7 @@ class Configurations extends React.Component {
             </pre>
             <Button
               variant="contained"
-              color="secondary"
+              color="primary"
               size="small"
               className={classes.btnSave}
               onClick={() => {
@@ -104,15 +117,17 @@ class Configurations extends React.Component {
           onChange={this.handleChange("config")}
         >
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.heading}>Config</Typography>
+            <Typography className={classes.heading} variant="h3">
+              Config
+            </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails className={classes.details}>
             <pre
               className={classes.code}
               ref={element => (this.configRef = element)}
             >
-              {this.configTemplate
-                ? Mustache.render(this.configTemplate, {
+              {configTemplate
+                ? Mustache.render(configTemplate, {
                     usedConfigs: Array.from(usedConfigs)
                     // showLibraries: usedConfigs.size
                   })
@@ -120,7 +135,7 @@ class Configurations extends React.Component {
             </pre>
             <Button
               variant="contained"
-              color="secondary"
+              color="primary"
               size="small"
               className={classes.btnSave}
               onClick={() => {

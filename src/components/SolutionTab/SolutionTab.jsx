@@ -5,8 +5,7 @@ import {
   Select,
   MenuItem,
   withStyles,
-  Grid,
-  Typography
+  Grid
 } from "@material-ui/core";
 import { DragDropContext } from "react-beautiful-dnd";
 
@@ -18,12 +17,21 @@ import Configurations from "../Configurations";
 
 class SolutionTab extends React.Component {
   state = {
-    selectedArchetype: Object.keys(this.props.data)[0],
-    availableItems: this.props.data[Object.keys(this.props.data)[0]],
+    selectedArchetype: null,
+    availableItems: null,
     selectedItems: {},
     usedConfigs: new Set(),
     droppableBucket: null
   };
+
+  componentWillMount() {
+    const { data } = this.props;
+    const initialArchType = Object.keys(this.props.data)[0];
+    this.setState({
+      selectedArchetype: initialArchType,
+      availableItems: data[initialArchType]
+    });
+  }
 
   handleChange = event => {
     this.setState({
@@ -124,6 +132,29 @@ class SolutionTab extends React.Component {
     }
   };
 
+  onSelectedItemDelete = (stage, index) => {
+    const { selectedItems } = this.state;
+    const itemToDelete = { ...selectedItems[stage][index] };
+    const splicedSelectedItems = [...selectedItems.Default];
+    splicedSelectedItems.splice(index, 1);
+
+    this.setState(prevState => {
+      return {
+        selectedItems: {
+          ...prevState.selectedItems,
+          Default: splicedSelectedItems
+        },
+        availableItems: {
+          ...prevState.availableItems,
+          [itemToDelete.Stage]: [
+            ...prevState.availableItems[itemToDelete.Stage],
+            itemToDelete
+          ]
+        }
+      };
+    });
+  };
+
   onDragStart = ({ source }) => {
     const { droppableId } = source;
     const bucket = droppableId.split("-")[1];
@@ -133,7 +164,13 @@ class SolutionTab extends React.Component {
   };
 
   render = () => {
-    const { className, classes, data } = this.props;
+    const {
+      className,
+      classes,
+      data,
+      configTemplate,
+      pipelineTemplate
+    } = this.props;
     const {
       selectedArchetype,
       availableItems,
@@ -148,9 +185,7 @@ class SolutionTab extends React.Component {
       <div>
         <form className={className} autoComplete="off">
           <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="arch">
-              <Typography>Archetype</Typography>
-            </InputLabel>
+            <InputLabel htmlFor="arch">Archetype</InputLabel>
             <Select
               value={selectedArchetype}
               onChange={this.handleChange}
@@ -161,7 +196,7 @@ class SolutionTab extends React.Component {
             >
               {Object.keys(data).map(arch => (
                 <MenuItem key={arch} value={arch}>
-                  <Typography>{arch}</Typography>
+                  {arch}
                 </MenuItem>
               ))}
             </Select>
@@ -183,13 +218,15 @@ class SolutionTab extends React.Component {
               <SelectedOptions
                 selectedItems={selectedItems}
                 droppableBucket={droppableBucket}
-                stages={archStages}
+                onDeleteClick={this.onSelectedItemDelete}
               />
             </Grid>
             <Grid item xs={3}>
               <Configurations
                 usedConfigs={usedConfigs}
                 selectedItems={selectedItems}
+                configTemplate={configTemplate}
+                pipelineTemplate={pipelineTemplate}
               />
             </Grid>
           </Grid>

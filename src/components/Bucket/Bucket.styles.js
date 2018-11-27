@@ -1,5 +1,3 @@
-import { pink } from "@material-ui/core/colors";
-
 export default theme => ({
   root: {
     ...theme.mixins.gutters(),
@@ -17,11 +15,5 @@ export default theme => ({
   },
   listDragged: {
     backgroundColor: "lightgrey"
-  },
-  listItemDragged: {
-    backgroundColor: pink[500]
-  },
-  listItemTextDragged: {
-    color: "#fff"
   }
 });

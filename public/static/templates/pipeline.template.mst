@@ -14,9 +14,11 @@ pipeline {
         {{#isStageVisible}}
         stage('{{& name}}') {
             steps {
-                {{#commands}}
-                {{& .}}
-                {{/commands}}
+                script {
+                    {{#commands}}
+                    {{& .}}
+                    {{/commands}}
+                }
             }
         }
         {{/isStageVisible}}

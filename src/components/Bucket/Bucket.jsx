@@ -1,31 +1,29 @@
 import React from "react";
-import { Droppable, Draggable } from "react-beautiful-dnd";
-import RootRef from "@material-ui/core/RootRef";
-import {
-  List,
-  ListItem,
-  ListItemText,
-  Paper,
-  Typography,
-  withStyles
-} from "@material-ui/core";
+import { Droppable } from "react-beautiful-dnd";
+import { List, Paper, Typography, withStyles } from "@material-ui/core";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 
 import styles from "./Bucket.styles";
-import { globalBuckets } from "../../constants";
+import DraggableItem from "../DraggableItem";
 
-function Bucket({ classes, bucketName, items, type, droppableBucket }) {
+function Bucket({
+  classes,
+  bucketName,
+  items,
+  type,
+  droppableBucket,
+  onDeleteClick
+}) {
+  const isDefaultBucket = bucketName === "Default";
   return (
     <Paper className={classes.root} elevation={1}>
-      <Typography variant="h6" component="h6">
-        {bucketName}
-      </Typography>
+      {!isDefaultBucket ? (
+        <Typography variant="h6">{bucketName}</Typography>
+      ) : null}
       <Droppable
         droppableId={`${type}-${bucketName}-Droppable`}
-        isDropDisabled={
-          [...globalBuckets, bucketName].indexOf(droppableBucket) < 0
-        }
+        isDropDisabled={!(isDefaultBucket || bucketName === droppableBucket)}
       >
         {(provided, snapshot) => (
           <div
@@ -37,39 +35,25 @@ function Bucket({ classes, bucketName, items, type, droppableBucket }) {
             {...provided.droppableProps}
           >
             <List dense={true}>
-              {items && items[bucketName]
-                ? items[bucketName].map((item, index) => (
-                    <Draggable
-                      key={item.Name}
-                      draggableId={`${type}-${bucketName}-${item.Name}`}
-                      index={index}
-                    >
-                      {(provided, snapshot) => (
-                        <RootRef rootRef={provided.innerRef}>
-                          <ListItem
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            style={provided.draggableProps.style}
-                            classes={{
-                              root: snapshot.isDragging
-                                ? classes.listItemDragged
-                                : undefined
-                            }}
-                          >
-                            <ListItemText
-                              primary={item.Name}
-                              classes={{
-                                primary: snapshot.isDragging
-                                  ? classes.listItemTextDragged
-                                  : undefined
-                              }}
-                            />
-                          </ListItem>
-                        </RootRef>
-                      )}
-                    </Draggable>
-                  ))
-                : null}
+              {items && items.length ? (
+                items.map((item, index) => (
+                  <DraggableItem
+                    key={item.Name}
+                    index={index}
+                    item={item}
+                    type={type}
+                    bucketName={bucketName}
+                    onDeleteClick={() =>
+                      onDeleteClick && onDeleteClick(bucketName, index)
+                    }
+                    showDeleteButton={!!onDeleteClick}
+                  />
+                ))
+              ) : (
+                <Typography align="center">
+                  {isDefaultBucket ? "Drag few items here" : ""}
+                </Typography>
+              )}
               {provided.placeholder}
             </List>
           </div>

@@ -4,7 +4,7 @@
   "homepage": "https://vidit-sh.github.io/pipeline-catalogue",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^3.3.2",
+    "@material-ui/core": "^3.6.0",
     "@material-ui/icons": "^3.0.1",
     "classnames": "^2.2.6",
     "es6-template": "^1.0.4",

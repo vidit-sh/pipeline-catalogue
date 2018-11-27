@@ -13,24 +13,36 @@ function OptionsSelector({
   title,
   type,
   droppableBucket,
-  stages
+  stages,
+  onDeleteClick
 }) {
   return (
     <div className={classnames(className, classes.root)}>
       <Typography variant="h2" className={classes.heading}>
         {title}
       </Typography>
-      {stages.map(bucket => {
-        return (
-          <Bucket
-            key={bucket}
-            bucketName={bucket}
-            items={items}
-            type={type}
-            droppableBucket={droppableBucket}
-          />
-        );
-      })}
+
+      {stages && stages.length ? (
+        stages.map(bucket => {
+          return (
+            <Bucket
+              key={bucket}
+              bucketName={bucket}
+              items={items[bucket]}
+              type={type}
+              droppableBucket={droppableBucket}
+            />
+          );
+        })
+      ) : (
+        <Bucket
+          bucketName="Default"
+          items={items["Default"]}
+          type={type}
+          droppableBucket={droppableBucket}
+          onDeleteClick={onDeleteClick}
+        />
+      )}
     </div>
   );
 }
