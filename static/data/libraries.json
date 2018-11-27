@@ -1,7 +1,7 @@
 {
   "Jenkins": {
     "Java": {
-      "MavenBuild": [
+      "Build": [
         {
           "Solution": "Jenkins",
           "Archetype": "Java",
@@ -19,7 +19,7 @@
           "Config": "pipelines/conf/build.yaml"
         }
       ],
-      "Notifications Email": [
+      "Post": [
         {
           "Solution": "Jenkins",
           "Archetype": "Java",
@@ -37,7 +37,7 @@
           "Config": ""
         }
       ],
-      "Gitflow Enablers": [
+      "Init": [
         {
           "Solution": "Jenkins",
           "Archetype": "Java",
@@ -59,7 +59,7 @@
           "Config": ""
         }
       ],
-      "BDD Test": [
+      "BDD Tests": [
         {
           "Solution": "Jenkins",
           "Archetype": "Java",
@@ -97,7 +97,7 @@
       ]
     },
     "NodeJS": {
-      "NPMBuild": [
+      "Build": [
         {
           "Solution": "Jenkins",
           "Archetype": "Java",
