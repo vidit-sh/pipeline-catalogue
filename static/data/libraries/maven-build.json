@@ -1,0 +1,24 @@
+{
+  "Jenkins": {
+    "Java": {
+      "Build": [
+        {
+          "Solution": "Jenkins",
+          "Archetype": "Java",
+          "Name": "Maven Java Build",
+          "Description": "Creating an build archive for a Java project using Maven as build tool.",
+          "Command": "runMavenBuild",
+          "Stage": "Build",
+          "Minimum SolutionVersion": "2.12",
+          "Version": "1.0",
+          "Tags": "Jenkins, Maven, Java, Build, Unix_only",
+          "Github Repo": "https://github.lbg.eu-gb.bluemix.net/jenkins-shared-library/java-maven-build_nix",
+          "Platform": "nix",
+          "Dependencies": "workflowLibs",
+          "Library": "maven-bulid@master",
+          "Config": "pipelines/conf/build.yaml"
+        }
+      ]
+    }
+  }
+}

@@ -1,22 +1,22 @@
 {
   "Jenkins": {
     "Java": {
-      "Build": [
+      "BDD Tests": [
         {
           "Solution": "Jenkins",
           "Archetype": "Java",
-          "Name": "Maven Java Build",
-          "Description": "Creating an build archive for a Java project using Maven as build tool.",
-          "Command": "runMavenBuild",
-          "Stage": "Build",
+          "Name": "BDD",
+          "Description": "Ability to run BDD Tests using cucumber",
+          "Command": "runBDDTests(archType : 'java' , buildTool : 'maven')",
+          "Stage": "BDD Tests",
           "Minimum SolutionVersion": "2.12",
           "Version": "1.0",
-          "Tags": "Jenkins, Maven, Java, Build, Unix_only",
-          "Github Repo": "https://github.lbg.eu-gb.bluemix.net/jenkins-shared-library/java-maven-build_nix",
-          "Platform": "nix",
-          "Dependencies": "workflowLibs",
-          "Library": "maven-bulid@master",
-          "Config": "pipelines/conf/build.yaml"
+          "Tags": "Jenkins, Sonar, SharedLib",
+          "Github Repo": "https://github.lbg.eu-gb.bluemix.net/jenkins-shared-library/bdd-java-maven_multi.git",
+          "Platform": "multi",
+          "Dependencies": "maven,java",
+          "Library": "bdd-java-maven_multi@master",
+          "Config": "pipelines/conf/job-configuration.yaml"
         }
       ],
       "Post": [
@@ -25,7 +25,10 @@
           "Archetype": "Java",
           "Name": "Email",
           "Description": "Notification Library for Email",
-          "Command": ["echo 'Notify using email'", "emailNotify(emailConfig)"],
+          "Command": [
+            "echo 'Notify using email'",
+            "emailNotify(emailConfig)"
+          ],
           "Stage": "Post",
           "Minimum SolutionVersion": "2.12",
           "Version": "1.0",
@@ -59,22 +62,22 @@
           "Config": ""
         }
       ],
-      "BDD Tests": [
+      "Build": [
         {
           "Solution": "Jenkins",
           "Archetype": "Java",
-          "Name": "BDD",
-          "Description": "Ability to run BDD Tests using cucumber",
-          "Command": "runBDDTests(archType : 'java' , buildTool : 'maven')",
-          "Stage": "BDD Tests",
+          "Name": "Maven Java Build",
+          "Description": "Creating an build archive for a Java project using Maven as build tool.",
+          "Command": "runMavenBuild",
+          "Stage": "Build",
           "Minimum SolutionVersion": "2.12",
           "Version": "1.0",
-          "Tags": "Jenkins, Sonar, SharedLib",
-          "Github Repo": "https://github.lbg.eu-gb.bluemix.net/jenkins-shared-library/bdd-java-maven_multi.git",
-          "Platform": "multi",
-          "Dependencies": "maven,java",
-          "Library": "bdd-java-maven_multi@master",
-          "Config": "pipelines/conf/job-configuration.yaml"
+          "Tags": "Jenkins, Maven, Java, Build, Unix_only",
+          "Github Repo": "https://github.lbg.eu-gb.bluemix.net/jenkins-shared-library/java-maven-build_nix",
+          "Platform": "nix",
+          "Dependencies": "workflowLibs",
+          "Library": "maven-bulid@master",
+          "Config": "pipelines/conf/build.yaml"
         }
       ],
       "Unit Test": [

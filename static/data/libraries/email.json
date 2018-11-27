@@ -1,0 +1,24 @@
+{
+  "Jenkins": {
+    "Java": {
+      "Post": [
+        {
+          "Solution": "Jenkins",
+          "Archetype": "Java",
+          "Name": "Email",
+          "Description": "Notification Library for Email",
+          "Command": ["echo 'Notify using email'", "emailNotify(emailConfig)"],
+          "Stage": "Post",
+          "Minimum SolutionVersion": "2.12",
+          "Version": "1.0",
+          "Tags": "Jenkins, Notification, SharedLib, Email",
+          "Github Repo": "https://github.lbg.eu-gb.bluemix.net/jenkins-shared-library/notifications_multi.git",
+          "Platform": "multi",
+          "Dependencies": "email-ext",
+          "Library": "notfications_multi@master",
+          "Config": ""
+        }
+      ]
+    }
+  }
+}
