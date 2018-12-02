@@ -59,7 +59,15 @@
           "Platform": "multi",
           "Dependencies": "pipelineplugin",
           "Library": "gitflowEnablers_multi@master",
-          "Config": ""
+          "Config": "",
+          "Environment": [
+            "gitWorkFlow = gitWorkFlowTypeByBranchRule()"
+          ],
+          "Global": [
+            "Someabc = 'someabcc'"
+          ],
+          "GlobalAgent": "testAgent",
+          "StageAgent": "master"
         }
       ],
       "Build": [
