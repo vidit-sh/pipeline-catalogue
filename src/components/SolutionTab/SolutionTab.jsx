@@ -168,7 +168,7 @@ class SolutionTab extends React.Component {
       className,
       classes,
       data,
-      configTemplate,
+      // configTemplate,
       pipelineTemplate
     } = this.props;
     const {
@@ -223,7 +223,7 @@ class SolutionTab extends React.Component {
               <Configurations
                 usedConfigs={usedConfigs}
                 selectedItems={selectedItems}
-                configTemplate={configTemplate}
+                // configTemplate={configTemplate}
                 pipelineTemplate={pipelineTemplate}
               />
             </Grid>

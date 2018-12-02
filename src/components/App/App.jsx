@@ -21,10 +21,10 @@ class App extends Component {
   async componentWillMount() {
     const response = await fetch("./static/data/libraries.json");
 
-    const configResponse = await fetch(
-      "./static/templates/config.template.mst"
-    );
-    this.configTemplate = await configResponse.text();
+    // const configResponse = await fetch(
+    //   "./static/templates/config.template.mst"
+    // );
+    // this.configTemplate = await configResponse.text();
 
     const pipelineResponse = await fetch(
       "./static/templates/pipeline.template.mst"
@@ -65,7 +65,7 @@ class App extends Component {
                     <SolutionTab
                       key={sol}
                       data={data[sol]}
-                      configTemplate={this.configTemplate}
+                      // configTemplate={this.configTemplate}
                       pipelineTemplate={this.pipelineTemplate}
                     />
                   ) : null

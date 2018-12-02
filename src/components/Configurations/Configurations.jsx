@@ -57,8 +57,8 @@ class Configurations extends React.Component {
       className,
       classes,
       usedConfigs,
-      pipelineTemplate,
-      configTemplate
+      pipelineTemplate
+      // configTemplate
     } = this.props;
     const { expanded, selectedItems } = this.state;
     return (
@@ -87,11 +87,38 @@ class Configurations extends React.Component {
                       commands: selectedItems[key].reduce(
                         (accu, item) =>
                           Array.isArray(item.Command)
-                            ? accu.concat(item.Command)
-                            : [...accu, item.Command],
+                            ? [...accu, ...item.Command]
+                            : typeof item.Command === "string"
+                              ? [...accu, item.Command]
+                              : [...accu],
                         []
                       ),
-                      libraries: selectedItems[key].map(item => item.Library),
+                      globals: selectedItems[key].reduce(
+                        (accu, item) =>
+                          Array.isArray(item.Global)
+                            ? [...accu, ...item.Global]
+                            : typeof item.Global === "string"
+                              ? [...accu, item.Global]
+                              : [...accu],
+                        []
+                      ),
+                      agent: selectedItems[key].find(item => !!item.StageAgent)
+                        ? selectedItems[key].find(item => !!item.StageAgent)
+                            .StageAgent
+                        : undefined,
+                      environments: selectedItems[key].reduce(
+                        (accu, item) =>
+                          Array.isArray(item.Environment)
+                            ? [...accu, ...item.Environment]
+                            : typeof item.Environment === "string"
+                              ? [...accu, item.Environment]
+                              : [...accu],
+                        []
+                      ),
+                      libraries: selectedItems[key].map(item => ({
+                        identifier: item.Library,
+                        remote: item["Github Repo"]
+                      })),
                       isStageVisible:
                         !!selectedItems[key] && selectedItems[key].length
                     }))
@@ -122,7 +149,17 @@ class Configurations extends React.Component {
             </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails className={classes.details}>
-            <pre
+            {Array.from(usedConfigs).map(config => (
+              <a
+                key={config}
+                href={config}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {config}
+              </a>
+            ))}
+            {/* <pre
               className={classes.code}
               ref={element => (this.configRef = element)}
             >
@@ -132,8 +169,8 @@ class Configurations extends React.Component {
                     // showLibraries: usedConfigs.size
                   })
                 : null}
-            </pre>
-            <Button
+            </pre> */}
+            {/* <Button
               variant="contained"
               color="primary"
               size="small"
@@ -144,7 +181,7 @@ class Configurations extends React.Component {
             >
               <SaveIcon className={classes.btnIcon} />
               Save
-            </Button>
+            </Button> */}
           </ExpansionPanelDetails>
         </ExpansionPanel>
       </div>
